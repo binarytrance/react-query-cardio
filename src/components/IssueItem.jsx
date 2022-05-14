@@ -6,6 +6,7 @@ import {
 } from 'react-icons/go';
 import { relativeDate } from '../helpers/relativeDate';
 import { useUserData } from '../hooks/useUserData';
+import { Label } from './Label';
 
 export const IssueItem = ({
   title,
@@ -32,9 +33,7 @@ export const IssueItem = ({
         <span>
           <Link to={`/issue/${number}`}>{title}</Link>
           {labels.map(label => (
-            <span key={label} className={`label red`}>
-              {label}
-            </span>
+            <Label label={label} key={label} />
           ))}
         </span>
         <small>
