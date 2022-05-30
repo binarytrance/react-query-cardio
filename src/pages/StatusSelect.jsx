@@ -9,7 +9,9 @@ export const StatusSelect = ({ status, onChange }) => {
     >
       <option value=''>Select a status</option>
       {possibleStatus.map(status => (
-        <option value={status.id}>{status.label}</option>
+        <option key={status.id} value={status.id}>
+          {status.label}
+        </option>
       ))}
     </select>
   );

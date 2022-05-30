@@ -13,6 +13,9 @@ export default function IssuesList({ activeLabels, status }) {
       return fetch(`/api/issues?${labelsString}${statusString}`).then(
         res => res.json()
       );
+    },
+    {
+      staleTime: 1000 * 60
     }
   );
   const [searchValue, setSearchValue] = useState('');
