@@ -4,8 +4,7 @@ import fetchWithError from '../helpers/fetchWithError';
 export const useLabelsData = () => {
   const labelsQuery = useQuery(
     ['labels'],
-    () =>
-      fetchWithError('/api/labels', { headers: { 'x-error': true } }),
+    () => fetchWithError('/api/labels'),
     {
       staleTime: 1000 * 60 * 60
     }

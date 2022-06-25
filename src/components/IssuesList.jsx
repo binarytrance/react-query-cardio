@@ -12,10 +12,7 @@ export default function IssuesList({ activeLabels, status }) {
         .map(label => `labels[]=${label}`)
         .join('&'); // turn into query string
       return fetchWithError(
-        `/api/issues?${labelsString}${statusString}`,
-        {
-          headers: { 'x-error': true }
-        }
+        `/api/issues?${labelsString}${statusString}`
       );
     },
     {
