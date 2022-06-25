@@ -16,6 +16,9 @@ export const IssueHeader = ({
   );
 
   const createdUser = useUserData(createdBy);
+  if (createdUser.isError) {
+    return <p>{createdUser.error.message}</p>;
+  }
   return (
     <header>
       <h2>

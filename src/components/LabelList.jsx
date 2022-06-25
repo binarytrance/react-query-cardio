@@ -8,6 +8,7 @@ export default function LabelList({
   return (
     <div className='labels'>
       <h3>Labels</h3>
+      {labelsQuery.isError && <p>labelsQuery.error.message</p>}
       {labelsQuery.isLoading ? (
         <p>Loading...</p>
       ) : (

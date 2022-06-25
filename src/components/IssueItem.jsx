@@ -20,6 +20,12 @@ export const IssueItem = ({
 }) => {
   const assigneeUser = useUserData(assignee);
   const createdByUser = useUserData(createdBy);
+  if (assigneeUser.isError) {
+    return <p>{assigneeUser.error.message}</p>;
+  }
+  if (createdByUser.isError) {
+    return <p>{createdByUser.error.message}</p>;
+  }
   return (
     <li>
       <div>
