@@ -18,11 +18,12 @@ export const IssueItem = ({
   status,
   labels
 }) => {
+  console.log({ assignee, createdBy });
   const assigneeUser = useUserData(assignee);
   const createdByUser = useUserData(createdBy);
-  if (assigneeUser.isError) {
-    return <p>{assigneeUser.error.message}</p>;
-  }
+  // if (assigneeUser.isError) {
+  //   return <p>{assigneeUser.error.message}</p>;
+  // }
   if (createdByUser.isError) {
     return <p>{createdByUser.error.message}</p>;
   }
