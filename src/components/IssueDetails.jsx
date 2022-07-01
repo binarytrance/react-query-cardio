@@ -1,14 +1,15 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
+import fetchWithError from '../helpers/fetchWithError';
 import { relativeDate } from '../helpers/relativeDate';
 import { useUserData } from '../hooks/useUserData';
 import { IssueHeader } from './IssueHeader';
 
 function useIssueData(issueNumber) {
-  return useQuery(['issues', issueNumber], () => {
-    return fetch(`/api/issues/${issueNumber}`).then(res =>
-      res.json()
-    );
+  return useQuery(['issues', issueNumber], ({ signal }) => {
+    return fetchWithError(`/api/issues/${issueNumber}`, {
+      signal
+    }).then(res => res.json());
   });
 }
 
