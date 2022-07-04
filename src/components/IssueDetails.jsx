@@ -7,7 +7,7 @@ import { IssueHeader } from './IssueHeader';
 
 function useIssueData(issueNumber) {
   return useQuery(['issues', issueNumber], ({ signal }) => {
-    return fetchWithError(`/api/issues/${issueNumber}`, {
+    return fetch(`/api/issues/${issueNumber}`, {
       signal
     }).then(res => res.json());
   });
