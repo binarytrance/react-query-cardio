@@ -56,6 +56,7 @@ function Comment({ comment, createdBy, createdDate }) {
 
 export default function IssueDetails() {
   const { number } = useParams();
+  console.log(useParams(), number);
   const issueQuery = useIssueData(number);
   const commentsQuery = useIssueComments(number);
 

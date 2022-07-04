@@ -1,21 +1,30 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import fetchWithError from '../helpers/fetchWithError';
 import { IssueItem } from './IssueItem';
 import Loader from './Loader';
 
 export default function IssuesList({ activeLabels, status }) {
+  const queryClient = useQueryClient();
   const issuesQuery = useQuery(
     ['issues', { activeLabels, status }],
-    ({ signal }) => {
+    async ({ signal }) => {
       const statusString = `&status=${status}`;
       const labelsString = activeLabels
         .map(label => `labels[]=${label}`)
         .join('&'); // turn into query string
-      return fetchWithError(
+      const issues = await fetchWithError(
         `/api/issues?${labelsString}${statusString}`,
         { signal }
       );
+      issues &&
+        issues.forEach(issue => {
+          queryClient.setQueryData(
+            ['issues', issue.number.toString()],
+            issue
+          );
+        });
+      return issues;
     },
     {
       staleTime: 1000 * 60
