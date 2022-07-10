@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import fetchWithError from '../helpers/fetchWithError';
 
 const addIssueHandler = async body => {
   console.log({ body });
-  return await fetch('api/issues', {
+  return fetchWithError('api/issues', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body)
@@ -15,16 +16,16 @@ export default function AddIssue() {
   const addIssueMutation = useMutation(addIssueHandler, {
     onSuccess: async data => {
       console.log(data);
-      const resolvedData = await data.json();
+      // const resolvedData = await data.json();
       // invalidate the issues list so that it has the latest added isse
       queryClient.invalidateQueries(['issues'], { exact: true });
       // prime the cache for the newly added issue so that the issue details page loads snappily
       queryClient.setQueryData(
-        ['issues', resolvedData.number.toString()],
-        resolvedData
+        ['issues', data.number.toString()],
+        data
       );
       // navigate to the added issue details page
-      navigate(`/issue/${resolvedData.number}`);
+      navigate(`/issue/${data.number}`);
     }
   });
   return (
