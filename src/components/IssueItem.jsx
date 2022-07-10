@@ -7,6 +7,8 @@ import {
 import { relativeDate } from '../helpers/relativeDate';
 import { useUserData } from '../hooks/useUserData';
 import { Label } from './Label';
+import { useQueryClient } from 'react-query';
+import fetchWithError from '../helpers/fetchWithError';
 
 export const IssueItem = ({
   title,
@@ -27,8 +29,19 @@ export const IssueItem = ({
   if (createdByUser.isError) {
     return <p>{createdByUser.error.message}</p>;
   }
+  const queryClient = useQueryClient();
   return (
-    <li>
+    <li
+      onMouseEnter={() => {
+        queryClient.prefetchQuery(['issues', number.toString()], () =>
+          fetchWithError(`/api/issues/${number}`)
+        );
+        queryClient.prefetchQuery(
+          ['issues', number.toString(), 'comments'],
+          () => fetchWithError(`/api/issues/${number}/comments`)
+        );
+      }}
+    >
       <div>
         {status === 'done' || status === 'cancelled' ? (
           <GoIssueClosed style={{ color: 'red' }} />

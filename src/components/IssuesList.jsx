@@ -20,6 +20,7 @@ export default function IssuesList({ activeLabels, status }) {
       issues &&
         issues.forEach(issue => {
           queryClient.setQueryData(
+            // priming the cache for issue details with data from issue list
             ['issues', issue.number.toString()],
             issue
           );

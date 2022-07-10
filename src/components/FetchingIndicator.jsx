@@ -5,7 +5,7 @@ export default function FetchingIndicator() {
   const isFetching = useIsFetching();
   if (isFetching) {
     return (
-      <div class='fetching-indicator'>
+      <div className='fetching-indicator'>
         <Loader />
       </div>
     );
