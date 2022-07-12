@@ -17,7 +17,7 @@ export default function AddIssue() {
     onSuccess: async data => {
       console.log(data);
       // const resolvedData = await data.json();
-      // invalidate the issues list so that it has the latest added isse
+      // invalidate the issues list so that it has the latest added issue
       queryClient.invalidateQueries(['issues'], { exact: true });
       // prime the cache for the newly added issue so that the issue details page loads snappily
       queryClient.setQueryData(
@@ -28,6 +28,7 @@ export default function AddIssue() {
       navigate(`/issue/${data.number}`);
     }
   });
+  console.log(addIssueMutation.isLoading, 'is loading');
   return (
     <div className='add-issue'>
       <h2>Add Issue</h2>
@@ -58,7 +59,7 @@ export default function AddIssue() {
             name='comment'
           ></textarea>
         </div>
-        <button type='submit' disable={addIssueMutation.isLoading}>
+        <button type='submit' disabled={addIssueMutation.isLoading}>
           {addIssueMutation.isLoading
             ? 'Adding Issue...'
             : 'Add Issue'}
