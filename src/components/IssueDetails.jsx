@@ -4,6 +4,7 @@ import fetchWithError from '../helpers/fetchWithError';
 import { relativeDate } from '../helpers/relativeDate';
 import { useUserData } from '../hooks/useUserData';
 import { IssueHeader } from './IssueHeader';
+import Issuestatus from './IssueStatus';
 
 function useIssueData(issueNumber) {
   return useQuery(['issues', issueNumber], ({ signal }) => {
@@ -78,7 +79,12 @@ export default function IssueDetails() {
                 ))
               )}
             </section>
-            <aside></aside>
+            <aside>
+              <Issuestatus
+                status={issueQuery.data.status}
+                issueNumber={issueQuery.data.number.toString()}
+              />
+            </aside>
           </main>
         </>
       )}

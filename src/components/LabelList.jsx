@@ -13,18 +13,19 @@ export default function LabelList({
         <p>Loading...</p>
       ) : (
         <ul>
-          {labelsQuery.data.map(label => (
-            <li key={label.id}>
-              <button
-                className={`${label.color} ${
-                  activeLabels.includes(label.id) && 'selected'
-                }`}
-                onClick={() => handleActiveLabels(label.id)}
-              >
-                {label.name}
-              </button>
-            </li>
-          ))}
+          {!labelsQuery.isError &&
+            labelsQuery.data.map(label => (
+              <li key={label.id}>
+                <button
+                  className={`${label.color} ${
+                    activeLabels.includes(label.id) && 'selected'
+                  }`}
+                  onClick={() => handleActiveLabels(label.id)}
+                >
+                  {label.name}
+                </button>
+              </li>
+            ))}
         </ul>
       )}
     </div>
