@@ -5,6 +5,7 @@ import { relativeDate } from '../helpers/relativeDate';
 import { useUserData } from '../hooks/useUserData';
 import { IssueHeader } from './IssueHeader';
 import Issuestatus from './IssueStatus';
+import IssueAssignment from './IssueAssignment';
 
 function useIssueData(issueNumber) {
   return useQuery(['issues', issueNumber], ({ signal }) => {
@@ -57,9 +58,9 @@ function Comment({ comment, createdBy, createdDate }) {
 
 export default function IssueDetails() {
   const { number } = useParams();
-  console.log(useParams(), number);
   const issueQuery = useIssueData(number);
   const commentsQuery = useIssueComments(number);
+  console.log(issueQuery.data.assignee);
 
   return (
     <div className='issue-details'>
@@ -82,6 +83,11 @@ export default function IssueDetails() {
             <aside>
               <Issuestatus
                 status={issueQuery.data.status}
+                issueNumber={issueQuery.data.number.toString()}
+              />
+
+              <IssueAssignment
+                assignee={issueQuery.data.assignee}
                 issueNumber={issueQuery.data.number.toString()}
               />
             </aside>
